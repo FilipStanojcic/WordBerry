@@ -23,22 +23,35 @@ HIGH/LOW are set for operation of LEDs. P
 Each LED on the matrix is controlled with two separate green and red LEDs. Pulse width modulation is used to lower the brightness of the red LED, creating a yellow output.
 
 My program was wired as follows:
-![image](https://github.com/user-attachments/assets/dcb4ac0a-8d9d-4240-b492-76c7c90ead19)
-
 ---Row 1 = GPIO 17 (G) + 21 (R)---
----Row 2 = GPIO 27 (G) + 22 (R)---
----Row 3 = GPIO 0 (G) + 16 (R)---
----Row 4 = GPIO 23 (G) + 24 (R)---
----Row 5 = GPIO 9 (G) + 10 (R)---
----Row 6 = GPIO 1 (G) + 2  (R)---
----Row 7 = GPIO 13 (G) + 18 (R)---
----Row 8 = GPIO 3 (G) + 4  (R)---
 
-|||Column 1 GPIO 25 (G) + 26 (R) (Green Wires)|||
-|||Column 2 GPIO 5  (G) + 6  (R) (White Wires)|||
-|||Column 3 GPIO 7  (G) + 8  (R) (Blue Wires)||||
-|||Column 4 GPIO 19 (G) + 20 (R) (Red Wires)|||||
-|||Column 5 GPIO 11 (G) + 12 (R) (Gray Wires)||||
+---Row 2 = GPIO 27 (G) + 22 (R)---
+
+---Row 3 = GPIO 0  (G) + 16 (R)---
+
+---Row 4 = GPIO 23 (G) + 24 (R)---
+
+---Row 5 = GPIO 9  (G) + 10 (R)---
+
+---Row 6 = GPIO 1  (G) + 2  (R)---
+
+---Row 7 = GPIO 13 (G) + 18 (R)---
+
+---Row 8 = GPIO 3  (G) + 4  (R)---
+
+
+|||Column 1 GPIO 25 (G) + 26 (R)|||
+
+|||Column 2 GPIO 5  (G) + 6  (R)|||
+
+|||Column 3 GPIO 7  (G) + 8  (R)|||
+
+|||Column 4 GPIO 19 (G) + 20 (R)|||
+
+|||Column 5 GPIO 11 (G) + 12 (R)|||
+
+Datasheet for understanding row and column pinouts.
+![image](https://github.com/user-attachments/assets/dcb4ac0a-8d9d-4240-b492-76c7c90ead19)
 
 # Execution
 Install Putty or whichever program allows communication through a TTL-serial cable (drivers may be needed):
