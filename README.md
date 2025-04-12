@@ -118,6 +118,34 @@ The way to utilize PWM in code for the columns then, is to set frequency to 5000
 100 = off and 0 = on, again, since columns need to be grounded for LEDs to turn on.
 
 # Useful URLs
+The game my program is based on:
 
+https://www.nytimes.com/games/wordle/index.html
+
+Rules for the game are found here, giving a basis of what the program must accomplish. Edge cases are discerned from here as well, all to mimic the original game better. Example:
+
+![image](https://github.com/user-attachments/assets/0749ac85-f828-49dc-935f-1497e7276f8f)
+
+Initially the program would take this guess, and
+display the second ‘R’ as yellow instead of the
+required gray, implying the word had an incorrect 
+amount of 3 ‘R’s and not the correct amount of 2.
+
+Source for used text file containing the list of five-letter words:
+
+https://charlesreid1.com/wiki/Five_Letter_Words
+
+This allowed for the program to create a list of words to randomly choose from with ease. Only requirements were mounting a USB to copy the file, and the Pi can access it.
+
+Having a random word bank to choose from every time the program is run mimics Wordle’s style of a new word every time you play.
+
+Datasheet for the LTP-2558AA and similar models:
+
+http://denethor.wlu.ca/pc300/projects/sensors/LPT2558AA.pdf
+
+Without this datasheet, understanding the device would have been much more difficult. With this, finding Pin 1, knowing what each pin activates, and how to manipulate the green and red LEDs for the whole matrix made wiring the device to GPIO pins a simple task.
 
 # Future Improvements
+Working with a display such as this was limiting, but trial and error, with lots of experimentation proved a useful commitment to my resilience.
+
+I would hope to work with a MAX7219 Matrix Display as it seems much more suited to my uses.
