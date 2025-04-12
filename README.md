@@ -21,7 +21,7 @@ Users have eight guesses on the display to find the randomly selected word from 
 4.	If guess is correct, win message is displayed and LEDs flash green.
 5.	If user runs out of attempts, lose message is displayed and LEDs flash red.
 
-The display is connected to every availalbe pin on a Raspberry Pi Cobbler Breakout Board. 
+The display is connected to every available pin on a Raspberry Pi Cobbler Breakout Board. 
 This allows control over each individual row and column on the display. 
 HIGH/LOW are set for operation of LEDs.
 Each LED on the matrix is controlled with two separate green and red LEDs. Pulse width modulation (PWM) is used to lower the brightness of the red LED, creating a yellow output.
