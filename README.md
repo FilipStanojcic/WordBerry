@@ -92,6 +92,8 @@ Now, your device should be communicating with the Pi and the display, given by t
 
 Errors may occur if python is not installed on your local terminal. If so, make sure to download the correct version for your system.
 
+Wordle GPIO Setup.txt contains some code that might prove useful for testing display functionality.
+
 # Difficulties
 The major challenge of this device was understanding how the display itself works when activating green, red, or both LEDs. 
 
