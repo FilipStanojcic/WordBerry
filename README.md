@@ -69,6 +69,7 @@ Wires to connect to the Pi Cobbler Breakout Board are TXD, RXD, and GND.
 If using Putty, create a Serial connection type, set Speed to 115200, and Serial line to COMXX, where XX is the number of the port, found in device manager under Ports:
 
 ![image](https://github.com/user-attachments/assets/4259d618-c931-406b-be17-0476233cefee)
+
 ![image](https://github.com/user-attachments/assets/6dcaf2fe-f226-4751-844d-6953a028feab)
 
 Wire the LTP-2558AA series matrix display to the Pi Cobbler.
