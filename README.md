@@ -56,9 +56,13 @@ Datasheet for understanding row and column pinouts.
 
 # Execution
 Install Putty or whichever program allows communication through a TTL-serial cable (drivers may be needed):
+
 https://embetronicx.com/uncategorized/fixed-prolific-pl2303ta-usb-to-serial-and-windows-11/ (for Windows).
+
 Wires to connect to the Pi Cobbler Breakout Board are TXD, RXD, and GND.
+
 If using Putty, create a Serial connection type, set Speed to 115200, and Serial line to COMXX, where XX is the number of the port, found in device manager under Ports:
+
 ![image](https://github.com/user-attachments/assets/4259d618-c931-406b-be17-0476233cefee)
 ![image](https://github.com/user-attachments/assets/6dcaf2fe-f226-4751-844d-6953a028feab)
 
