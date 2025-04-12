@@ -23,6 +23,7 @@ HIGH/LOW are set for operation of LEDs. P
 Each LED on the matrix is controlled with two separate green and red LEDs. Pulse width modulation is used to lower the brightness of the red LED, creating a yellow output.
 
 My program was wired as follows:
+
 ---Row 1 = GPIO 17 (G) + 21 (R)---
 
 ---Row 2 = GPIO 27 (G) + 22 (R)---
