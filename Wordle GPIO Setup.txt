@@ -1,0 +1,171 @@
+/////////////////////////////////////////////////
+---Row 1 = GPIO 17 (G) + 21 (R)---
+---Row 2 = GPIO 27 (G) + 22 (R)---
+---Row 3 = GPIO 0  (G) + 16 (R)---
+---Row 4 = GPIO 23 (G) + 24 (R)---
+---Row 5 = GPIO 9  (G) + 10 (R)---
+---Row 6 = GPIO 1  (G) + 2  (R)---
+---Row 7 = GPIO 13 (G) + 18 (R)---
+---Row 8 = GPIO 3  (G) + 4  (R)---
+/////////////////////////////////////////////////
+|||Column 1 GPIO 25 (G) + 26 (R) (Green Wires)|||
+|||Column 2 GPIO 5  (G) + 6  (R) (White Wires)|||
+|||Column 3 GPIO 7  (G) + 8  (R) (Blue Wires)||||
+|||Column 4 GPIO 19 (G) + 20 (R) (Red Wires)|||||
+|||Column 5 GPIO 11 (G) + 12 (R) (Gray Wires)||||
+
+Output high for GPIO 1 and output low for GPIO 25 makes Row 6 Column 1 LED Green turn on.
+Output high for GPIO 2 and GPIO 26 makes Row 6 Column 1 LED Red turn on.
+Combine both and Row 6 Column 1 LED turns Orange.
+However, the following rows (7 and 8) will copy what the row above displays due to the columns having set values for the whole LED matrix.
+
+import RPi.GPIO as GPIO
+import time
+
+ROWS = [(17, 21), (27, 22), (0, 16), (23, 24), (9, 10), (1, 2), (13, 18), (3, 4)]
+
+COLUMNS = [(25, 26), (5, 6), (7, 8), (19, 20), (11, 12)]
+
+GPIO.setmode(GPIO.BCM)
+
+for green_pin, red_pin in ROWS:
+        GPIO.setup(green_pin, GPIO.OUT)
+        GPIO.setup(red_pin, GPIO.OUT)
+        GPIO.output(green_pin, GPIO.HIGH)
+        GPIO.output(red_pin, GPIO.HIGH)
+
+for green_pin, red_pin in COLUMNS:
+        GPIO.setup(green_pin, GPIO.OUT)
+        GPIO.setup(red_pin, GPIO.OUT)
+        GPIO.output(green_pin, GPIO.HIGH)
+        GPIO.output(red_pin, GPIO.HIGH)
+
+def display_row(row_index, colours):
+        for green_row, red_row in ROWS:
+                GPIO.output(green_row, GPIO.LOW)
+                GPIO.output(red_row, GPIO.LOW)
+
+        green_row, red_row = ROWS[row_index]
+        GPIO.output(green_row, GPIO.HIGH)
+        GPIO.output(red_row, GPIO.HIGH)
+
+        for col_index in range(len(COLUMNS)):
+                green_col, red_col = COLUMNS[col_index]
+
+                if colours[col_index].lower() == "r":
+                        GPIO.output(green_col, GPIO.HIGH)
+                        GPIO.output(red_col, GPIO.LOW)
+
+                elif colours[col_index].lower() == "g":
+                        GPIO.output(green_col, GPIO.LOW)
+                        GPIO.output(red_col, GPIO.HIGH)
+
+                elif colours[col_index].lower() == "o":
+                        GPIO.output(green_col, GPIO.LOW)
+                        GPIO.output(red_col, GPIO.LOW)
+
+                else:
+                        print("Invalid input, turning off row.")
+                        GPIO.output(green_col, GPIO.HIGH)
+                        GPIO.output(red_col, GPIO.HIGH)
+
+try:
+        previous_row_index = None
+        while True:
+                for i in range(len(ROWS)):
+                        colours = [input(f"Enter colour for Row {i+1}, Column {j+1} (G, R, O): ") for j in range(len(COLUMNS))]
+                        if previous_row_index is not None:
+                                green_prev, red_prev = ROWS[previous_row_index]
+                                GPIO.output(green_prev, GPIO.LOW)
+                                GPIO.output(red_prev, GPIO.LOW)
+                        display_row(i, colours)
+                        previous_row_index = i
+                if i == 7:
+                        time.sleep(4)
+                        break
+        print("All done!")
+
+except KeyboardInterrupt:
+        print("Cleaning up...")
+
+finally:
+        GPIO.cleanup()
+
+--------------------------------------------------------------------------------------
+import RPi.GPIO as GPIO
+import time
+
+ROWS = [(17, 21), (27, 22), (0, 16), (23, 24), (9, 10), (1, 2), (13, 18), (3, 4)]
+
+COLUMNS = [(25, 26), (5, 6), (7, 8), (19, 20), (11, 12)]
+
+GPIO.setmode(GPIO.BCM)
+
+pwm_pins = {}
+
+for green_pin, red_pin in ROWS:
+        GPIO.setup(green_pin, GPIO.OUT)
+        GPIO.setup(red_pin, GPIO.OUT)
+
+        pwm_pins[green_pin] = GPIO.PWM(green_pin, 1000)
+        pwm_pins[red_pin] = GPIO.PWM(red_pin, 1000)
+        pwm_pins[green_pin].start(0)
+        pwm_pins[red_pin].start(0)
+
+for green_pin, red_pin in COLUMNS:
+        GPIO.setup(green_pin, GPIO.OUT)
+        GPIO.setup(red_pin, GPIO.OUT)
+        pwm_pins[green_pin] = GPIO.PWM(green_pin, 1000)
+        pwm_pins[red_pin] = GPIO.PWM(red_pin, 1000)
+        pwm_pins[green_pin].start(100)
+        pwm_pins[red_pin].start(100)
+
+def display_row(row_index, colours):
+        for green_row, red_row in ROWS:
+                pwm_pins[green_row].ChangeDutyCycle(0)
+                pwm_pins[red_row].ChangeDutyCycle(0)
+
+        green_row, red_row = ROWS[row_index]
+        pwm_pins[green_row].ChangeDutyCycle(100)
+        pwm_pins[red_row].ChangeDutyCycle(15)
+
+        for col_index in range(len(COLUMNS)):
+                green_col, red_col = COLUMNS[col_index]
+
+                if colours[col_index].lower() == "r":
+                        pwm_pins[green_col].ChangeDutyCycle(100)
+                        pwm_pins[red_col].ChangeDutyCycle(0)
+
+                elif colours[col_index].lower() == "g":
+                        pwm_pins[green_col].ChangeDutyCycle(0)
+                        pwm_pins[red_col].ChangeDutyCycle(100)
+
+                elif colours[col_index].lower() == "o":
+                        pwm_pins[green_col].ChangeDutyCycle(0)
+                        pwm_pins[red_col].ChangeDutyCycle(0)
+
+                else:
+                        print("Invalid input, turning off row.")
+                        pwm_pins[red_col].ChangeDutyCycle(100)
+                        pwm_pins[green_col].ChangeDutyCycle(100)
+
+try:
+        previous_row_index = None
+        while True:
+                for i in range(len(ROWS)):
+                        colours = [input(f"Enter colour for Row {i+1}, Column {j+1} (G, R, O, Y): ") for j in range(len(COLUMNS))]
+                        if previous_row_index is not None:
+                                green_prev, red_prev = ROWS[previous_row_index]
+                                GPIO.output(green_prev, GPIO.LOW)
+                                GPIO.output(red_prev, GPIO.LOW)
+                        display_row(i, colours)
+                        previous_row_index = i
+                if i == 7:
+                        time.sleep(4)
+                        break
+        print("All done!")
+except KeyboardInterrupt:
+        print("Cleaning up...")
+finally:
+        GPIO.cleanup()
+
