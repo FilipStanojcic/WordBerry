@@ -23,8 +23,8 @@ Users have eight guesses on the display to find the randomly selected word from 
 
 The display is connected to every availalbe pin on a Raspberry Pi Cobbler Breakout Board. 
 This allows control over each individual row and column on the display. 
-HIGH/LOW are set for operation of LEDs. P
-Each LED on the matrix is controlled with two separate green and red LEDs. Pulse width modulation is used to lower the brightness of the red LED, creating a yellow output.
+HIGH/LOW are set for operation of LEDs.
+Each LED on the matrix is controlled with two separate green and red LEDs. Pulse width modulation (PWM) is used to lower the brightness of the red LED, creating a yellow output.
 
 My program was wired as follows:
 
@@ -93,6 +93,31 @@ Now, your device should be communicating with the Pi and the display, given by t
 Errors may occur if python is not installed on your local terminal. If so, make sure to download the correct version for your system.
 
 # Difficulties
+The major challenge of this device was understanding how the display itself works when activating green, red, or both LEDs. 
+
+I started with wiring rows 6, 7, 8 and their pins to GPIO pins, and grounding 220Ω resistors to the column pins. I faced a dilemma in testing:
+
+Output high for GPIO 1 and output low for GPIO 25 turns Row 6 Column 1 green LED on.
+
+Output high for GPIO 2 and output low for GPIO 26 turns Row 6 Column 1 red LED on.
+
+Combine both, and Row 6 Column 1 LED turns orange.
+
+However, the following rows (7 and 8) will copy what the row above displays due to the columns having set values for the whole LED matrix. Inserting wires before the resistors on the column pins allowed more functionality with the display, but not enough to avoid the “inheritance problem” as I called it; column values are set for the whole display, not individual rows.
+
+The issue here for a game like Wordle is it allows users to see their previous entries and what the results were. This is sadly unachievable from a hardware aspect. Example:
+
+![image](https://github.com/user-attachments/assets/459e0458-1a8f-48b4-b252-b242b3671782)
+
+This result cannot be displayed properly, as a yellow LED requires green and red to be active on Row 2 and Column 2. Following the matrix wiring, Row 3 Column 2 would become yellow instead of the required green as the column still has red active to accurately show the previous guess’ results. In light of this, the previous guesses are not shown, and attempts cycle down from the first row to the last.
+
+Another challenge concerned activating PWM. LEDs will turn on based on column activation. Rows are always active for both green and red, allowing column activation to control exactly what colour is produced for each LED in a row. However, with columns: HIGH = off and LOW = on due to the need for GND on the LED cathodes.
+
+The way to utilize PWM in code for the columns then, is to set frequency to 5000Hz to reduce flickering in the red LED, and when changing the duty cycle, remembering:
+
+100 = off and 0 = on, again, since columns need to be grounded for LEDs to turn on.
+
+# Useful URLs
 
 
 # Future Improvements
