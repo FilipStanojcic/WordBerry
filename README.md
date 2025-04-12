@@ -80,13 +80,13 @@ If needed, follow the wiring guide provided above.
 Make sure to attatch resistors to cathodes to ensure LED operation. In my case, I used 220 Ohms for each column on the display.
 Place column wires before or after resistors on column pins.
 
-Download wordle.py and 5_letter_bank.txt to your device.
+Download Wordle.py and 5_letter_bank.txt to your device.
 Ensure the text file is placed on your Pi, whether through mounting, online copying, or any method.
 
 In a command terminal (Windows CMD, Powershell, Terminal, etc.) navigate to downloads using the "cd" command 
 (for example: C:\User\fstan> cd Downloads) or wherever the files have been saved. 
 
-Run the game file using "python wordle.py".
+Run the game file using "python Wordle.py".
 
 Now, your device should be communicating with the Pi and the display, given by the welcome message when running the program. Now you can input guesses for Wordle, and the display will reflect your results.
 
