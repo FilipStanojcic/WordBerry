@@ -52,6 +52,7 @@ My program was wired as follows:
 |||Column 5 GPIO 11 (G) + 12 (R)|||
 
 Datasheet for understanding row and column pinouts.
+
 ![image](https://github.com/user-attachments/assets/dcb4ac0a-8d9d-4240-b492-76c7c90ead19)
 
 # Execution
