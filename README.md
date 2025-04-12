@@ -8,12 +8,16 @@ Users have eight guesses on the display to find the randomly selected word from 
     If not, the program will display an error message and ask the user to try again.
 2.	If this criteria is met, guessed entry is compared to the target word.
 3.	Each attempt represents a row on the display. The row will display:
+   
     a.	Green on the LED corresponding to letter position in word, only if that letter is in the 
         word, and it is in the correct spot.
+  	
     b.	Yellow on the LED corresponding to letter position in word, only if that letter is in 
         the word, but it is not in the correct spot.
+  	
     c.	Red on the LED corresponding to letter position in word, only if that letter is not in 
         the word.
+  	
 4.	If guess is correct, win message is displayed and LEDs flash green.
 5.	If user runs out of attempts, lose message is displayed and LEDs flash red.
 
